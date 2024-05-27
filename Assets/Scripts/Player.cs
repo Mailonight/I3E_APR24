@@ -5,6 +5,7 @@
  * Player's abilities and functions like increasing score, door, etc.
  */
 
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,10 +15,16 @@ public class Player : MonoBehaviour
 {
     private CollectibleManager collectibleManager;
 
+    //Reference to the FirstPersonController
+    private FirstPersonController firstPersonController;
+
     private void Start()
     {
         // Find the CollectibleManager in the scene
         collectibleManager = FindObjectOfType<CollectibleManager>();
+
+        //Find the FirstPersonController attached to the player
+        firstPersonController = GetComponent<FirstPersonController>();
     }
 
     // Called when the player interacts with a collectible
@@ -30,6 +37,33 @@ public class Player : MonoBehaviour
             Debug.Log("Collectible collected.");
         }
     }
+
+    //Called when the player collects a speed collectible
+    public void IncreaseSpeed(float speedMultiplier)
+    {
+        //Increase player's movement speed
+        if (firstPersonController != null)
+        {
+            //Adjust movement speed
+            firstPersonController.MoveSpeed *= speedMultiplier;
+            firstPersonController.SprintSpeed *= speedMultiplier;
+        }
+    }
+
+    // Called when the player collects a jump height collectible
+    public void IncreaseJumpHeight(float jumpHeightIncrease)
+    {
+        // Increase player's jump height
+        if (firstPersonController != null)
+        {
+            // Adjust jump height
+            firstPersonController.JumpHeight += jumpHeightIncrease;
+        }
+    }
+
+
+
+
 
     public TextMeshProUGUI overallScoreText;
     public TextMeshProUGUI uniqueScoreText;
